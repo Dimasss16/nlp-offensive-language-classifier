@@ -1,6 +1,6 @@
 import re
 import pandas as pd
-import os
+import config
 
 
 def remove_html_entities(text):
@@ -51,13 +51,20 @@ def minimal_preprocess(text):
 
 
 def preprocess_splits():
-    os.makedirs('data/processed_light', exist_ok=True)
-    os.makedirs('data/processed_bert', exist_ok=True)
+    config.PROCESSED_TRAIN_PATH.parent.mkdir(parents=True, exist_ok=True)
+    config.BERT_TRAIN_PATH.parent.mkdir(parents=True, exist_ok=True)
 
     for split_name in ['train', 'val', 'test']:
         print(f"Processing {split_name} set...")
 
-        df = pd.read_csv(f'data/splits/{split_name}.csv')
+        if split_name == 'train':
+            input_path = config.TRAIN_PATH
+        elif split_name == 'val':
+            input_path = config.VAL_PATH
+        else:
+            input_path = config.TEST_PATH
+
+        df = pd.read_csv(input_path)
         print(f"Loaded {len(df)} samples")
 
         # light preprocessing for tf-idf
@@ -68,8 +75,15 @@ def preprocess_splits():
         df_bert = df.copy()
         df_bert['clean_text'] = df_bert['text'].apply(minimal_preprocess)
 
-        light_path = f'data/processed_light/{split_name}.csv'
-        bert_path = f'data/processed_bert/{split_name}.csv'
+        if split_name == 'train':
+            light_path = config.PROCESSED_TRAIN_PATH
+            bert_path = config.BERT_TRAIN_PATH
+        elif split_name == 'val':
+            light_path = config.PROCESSED_VAL_PATH
+            bert_path = config.BERT_VAL_PATH
+        else:
+            light_path = config.PROCESSED_TEST_PATH
+            bert_path = config.BERT_TEST_PATH
 
         df_light.to_csv(light_path, index=False)
         df_bert.to_csv(bert_path, index=False)
@@ -84,8 +98,8 @@ def preprocess_splits():
                 print(f"Light: {df_light.iloc[i]['clean_text'][:80]}...")
                 print(f"BERT: {df_bert.iloc[i]['clean_text'][:80]}...")
 
-    train_light = pd.read_csv('data/processed_light/train.csv')
-    train_bert = pd.read_csv('data/processed_bert/train.csv')
+    train_light = pd.read_csv(config.PROCESSED_TRAIN_PATH)
+    train_bert = pd.read_csv(config.BERT_TRAIN_PATH)
 
     print("Let's compare what we preprocessed:")
     print()

@@ -6,7 +6,9 @@ import config
 
 
 def download_data():
-    if os.path.exists(config.RAW_DATA_PATH):
+    config.RAW_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    if config.RAW_DATA_PATH.exists():
         print(f"Loading existing data from {config.RAW_DATA_PATH}")
         return pd.read_csv(config.RAW_DATA_PATH)
 
@@ -14,7 +16,6 @@ def download_data():
     dataset = load_dataset(config.DATASET_NAME)
     df = pd.DataFrame(dataset['train'])
 
-    os.makedirs('data/raw', exist_ok=True)
     df.to_csv(config.RAW_DATA_PATH, index=False)
     print(f"Saved {len(df)} samples to {config.RAW_DATA_PATH}")
 
@@ -41,8 +42,7 @@ def create_splits(df):
 
     print(f"Splits: Train={len(X_train)}, Val={len(X_val)}, Test={len(X_test)}")
 
-    # Save splits
-    os.makedirs('data/splits', exist_ok=True)
+    config.TRAIN_PATH.parent.mkdir(parents=True, exist_ok=True)
 
     train_df = pd.DataFrame({'text': X_train, 'label': y_train})
     val_df = pd.DataFrame({'text': X_val, 'label': y_val})
@@ -52,7 +52,7 @@ def create_splits(df):
     val_df.to_csv(config.VAL_PATH, index=False)
     test_df.to_csv(config.TEST_PATH, index=False)
 
-    print(f"Splits saved to data/splits/")
+    print(f"Splits saved to {config.TRAIN_PATH.parent}/")
 
     return train_df, val_df, test_df
 
