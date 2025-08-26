@@ -35,11 +35,11 @@ During preprocessing we created two cleaned versions of the train/val/test split
 
 Here is how the data was handled:
 
-* Inputs: `data/splits/{train,val,test}.csv` with columns `text,label`
+* Inputs: `src/data/splits/{train,val,test}.csv` with columns `text,label`
 * Outputs:
 
-  * `data/processed_light/{train,val,test}.csv` for TF-IDF + Logistic Regression
-  * `data/processed_bert/{train,val,test}.csv` for BERT
+  * `src/data/processed_light/{train,val,test}.csv` for TF-IDF + Logistic Regression
+  * `src/data/processed_bert/{train,val,test}.csv` for BERT
 * Each output file keeps the original `text`, adds `clean_text`, and preserves `label`.
 
   Here are the cleaning details:
