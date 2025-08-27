@@ -1,5 +1,5 @@
-Test Accuracy: 0.8951048951048951
-Test Macro-F1: 0.6595493810879501
+Test Accuracy: 0.8951
+Test Macro-F1: 0.6595
 Test Classification Report
                precision    recall  f1-score   support
 

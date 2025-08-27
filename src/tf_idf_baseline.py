@@ -67,7 +67,7 @@ save_predictions(X_test, y_test, y_test_pred, "predictions/logreg/test_predictio
 
 metrics_path = os.path.join(PRED_DIR, "metrics.txt")
 with open(metrics_path, "w") as f: 
-    f.write(f"Test Accuracy: {accuracy_score(y_test, y_test_pred)}")
-    f.write(f"\nTest Macro-F1: {f1_score(y_test, y_test_pred, average='macro')}")
+    f.write(f"Test Accuracy: {accuracy_score(y_test, y_test_pred):.4f}")
+    f.write(f"\nTest Macro-F1: {f1_score(y_test, y_test_pred, average='macro'):.4f}")
     f.write(f"\nTest Classification Report")
     f.write(f"\n {classification_report(y_test, y_test_pred)}")
