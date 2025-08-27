@@ -9,13 +9,13 @@ test_path  = "src/data/processed_light/test.csv"
 
 #identify majority class
 train_df = pd.read_csv(train_path)
-majority_class = str(train_df["label"].value_counts().idxmax())
+majority_class = train_df["label"].value_counts().idxmax()
 print(f"Majority class (training set): {majority_class}")
 
 #save model
 model_path = "models/majority/majority.json"
 with open(model_path, "w") as f:
-    json.dump({"majority_class": majority_class}, f)
+    json.dump({"majority_class": int(majority_class)}, f)
 print(f"Saved majority baseline model to {model_path}")
 
 
@@ -43,7 +43,7 @@ macro_f1 = f1_score(y_true, y_pred, average="macro")
 report   = classification_report(y_true, y_pred)
 
 # Save metrics
-metrics_path = "metrics.txt"
+metrics_path = "models/majority/metrics.txt"
 with open(metrics_path, "w") as f:
     f.write(f"Majority class: {majority_class}\n")
     f.write(f"Validation accuracy: {accuracy:.4f}\n")

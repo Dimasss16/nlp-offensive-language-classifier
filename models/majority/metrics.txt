@@ -1,0 +1,14 @@
+Majority class: 1
+Validation accuracy: 0.7743
+Macro F1 score: 0.2909
+
+Full classification report:
+              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00       215
+           1       0.77      1.00      0.87      2879
+           2       0.00      0.00      0.00       624
+
+    accuracy                           0.77      3718
+   macro avg       0.26      0.33      0.29      3718
+weighted avg       0.60      0.77      0.68      3718
