@@ -1,0 +1,3 @@
+Model,Accuracy,Macro F1,Weighted F1,Hate Speech Precision,Hate Speech Recall,Hate Speech F1,Offensive Precision,Offensive Recall,Offensive F1,Neither Precision,Neither Recall,Neither F1
+Majority Baseline,0.774,0.291,0.676,0.0,0.0,0.0,0.774,1.0,0.873,0.0,0.0,0.0
+TF-IDF + LogReg,0.895,0.66,0.878,0.614,0.126,0.209,0.905,0.972,0.938,0.863,0.803,0.832
