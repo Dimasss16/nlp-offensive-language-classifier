@@ -61,6 +61,72 @@ Here is how the data was handled:
 * Collapse repeated whitespace
 * We keep the original casing and punctuation for bert.
 
+# Model storage and loading
+
+As a result of our baseline analysis, we saved two models: majority class and tf-idf + logreg. 
+
+## Majority baseline
+
+Location: `models/majority/`
+
+Files:
+
+- `majority.json` contains the majority class (always predicts class 1 -- 'offensive')
+- `metrics.txt` - contains performance metrics
+
+
+How to load:
+
+```
+import json
+with open('models/majority/majority.json', 'r') as f:
+    model_info = json.load(f)
+majority_class = model_info['majority_class']
+```
+
+## TF-IDF + Logistic Regression
+
+Location: `models/logreg/`
+
+Files:
+
+- `tfidf.joblib` - TF-IDF vectorizer (saved as object, *not dictionary*)
+- `logreg.joblib` - Logistic Regression classifier (saved as object, *not dictionary*)
+
+The above means it's improssible to load these with `.get()` method
+
+Here is how to load:
+```
+import joblib
+
+vectorizer = joblib.load('models/logreg/tfidf.joblib')
+classifier = joblib.load('models/logreg/logreg.joblib')
+
+text = "some text here"
+text_vector = vectorizer.transform([text])
+prediction = classifier.predict(text_vector)[0]
+```
+
+## Prediction file formats
+
+### Majority baseline predictions
+- **Columns**: `text`, `label`, `clean_text`, `prediction`
+- `label`: True label (0/1/2)
+- `prediction`: Always 1 (offensive)
+
+### TF-IDF Predictions  
+- **Columns**: `text`, `true_label`, `predicted_label`
+- `true_label`: Actual class (0/1/2)
+- `predicted_label`: Model prediction (0/1/2)
+
+**Note**: We should unify the colum naming later. For now:
+- Majority uses: `label`/`prediction`
+- TF-IDF uses: `true_label`/`predicted_label`
+
+## Class mapping
+- 0: `hate_speech`
+- 1: `offensive`
+- 2: `neither`
 
 
 
