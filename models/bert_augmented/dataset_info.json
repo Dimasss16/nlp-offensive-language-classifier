@@ -1,0 +1,6 @@
+{
+  "train_samples": 22263,
+  "val_samples": 3718,
+  "augmented": true,
+  "dataset_name": "augmented"
+}
