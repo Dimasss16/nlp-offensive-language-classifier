@@ -119,13 +119,6 @@ prediction = classifier.predict(text_vector)[0]
 - `true_label`: Actual class (0/1/2)
 - `predicted_label`: Model prediction (0/1/2)
 
-**Note**: We should unify the colum naming later. For now:
-- Majority uses: `label`/`prediction`
-- TF-IDF uses: `true_label`/`predicted_label`
-
-Here’s a drop-in **BERT training & results** section for your README, matching your tone and keeping it mostly plain text with two compact tables.
-
----
 
 ## BERT fine-tuning (clean vs. augmented)
 
